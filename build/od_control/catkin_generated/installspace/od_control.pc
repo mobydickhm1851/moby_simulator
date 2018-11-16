@@ -1,8 +1,0 @@
-prefix=/home/liuyc/moby_ws/moby_simulator/install
-
-Name: od_control
-Description: Description of od_control
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/liuyc/moby_ws/moby_simulator/install/lib 
-Requires: 

@@ -1,8 +1,0 @@
-prefix=/home/liuyc/moby_ws/moby_simulator/install
-
-Name: od_description
-Description: Description of od_description
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/liuyc/moby_ws/moby_simulator/install/lib 
-Requires: 
