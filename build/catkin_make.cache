@@ -1,0 +1,2 @@
+od_control:od_description:od_gazebo
+-DCATKIN_DEVEL_PREFIX=/home/liuyc/moby_ws/moby_simulator/devel -DCMAKE_INSTALL_PREFIX=/home/liuyc/moby_ws/moby_simulator/install -G Unix Makefiles

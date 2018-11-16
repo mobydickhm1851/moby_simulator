@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot name="obstacle" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+  <!-- Define your model behavior in Gazebo -->
+  <!-- This file will be called by obstacle.urdf.xacro -->
+  <xacro:macro name="obstacle_gazebo" params="name">
+
+   <!-- Propagate the name to all elements to make them unique and be consistent with URDF names -->
+
+   <!-- gazebo ros_control plugin -->	
+   <gazebo>
+     <plugin name="${name}_gazebo_ros_control" filename="libgazebo_ros_control.so">
+       <robotNamespace>${name}</robotNamespace>
+       <!-- add the custom sim behavior -->
+       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+     </plugin>
+   </gazebo>
+
+   <!-- gazebo description for x_link -->
+    <gazebo reference="${name}_x_link">
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+   <!-- gazebo description for y_link -->
+    <gazebo reference="${name}_y_link">
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
+        <material>Gazebo/Green</material>
+        <self_collide>0</self_collide>
+    </gazebo>
+
+   <!-- gazebo description for entity_link, which is the obstacle link -->
+    <gazebo reference="${name}_entity_link">
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+   <!-- transmission setting for x and y link -->
+    <transmission name="${name}_x_tran">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${name}_x_joint">
+            <hardwareInterface>PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${name}_x_motor">
+            <hardwareInterface>PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="${name}_y_tran">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${name}_y_joint">
+            <hardwareInterface>PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${name}_y_motor">
+            <hardwareInterface>PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+   
+   </xacro:macro>
+</robot>

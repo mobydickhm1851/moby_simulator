@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+
+<launch>
+<arg name="robot_ns" />
+<arg name="init_pose" />
+
+
+  <!-- Convert an xacro and put on parameter server -->
+  <param name="/$(arg robot_ns)/robot_description" command="$(find xacro)/xacro --inorder $(find od_description)/urdf/$(arg robot_ns).urdf.xacro" />
+
+  <!-- Spawn a robot into Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen" args="-param robot_description -urdf -model $(arg robot_ns) $(arg init_pose)" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find od_control)/config/$(arg robot_ns)_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false"  output="screen" ns="/$(arg robot_ns)" args="$(arg robot_ns)_x_joint_controller
+                                             $(arg robot_ns)_y_joint_controller 
+					     joint_state_controller"/>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="$(arg robot_ns)_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+  <!--  <remap from="/joint_states" to="/obstacle/joint_states" / -->
+  </node> 
+  
+  <!-- obs movement control node -->
+  <node pkg="od_control" type="obstacle_commands.py" name="obstacle_commands">
+  </node>
+
+</launch>

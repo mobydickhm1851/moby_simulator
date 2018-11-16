@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<!-- racecar -->
+<!--base_link is the chassis-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_footprint2_base_link" args="0 0 0.05 0 0 0 base_footprint chassis "/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="chassis2_inertia" args="0 0 0 0 0 0  chassis chassis_inertia"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="chassis2_lrwheel" args="0 0.1 0 0 0 1.5708 chassis left_rear_wheel"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="chassis2_rrwheel" args="0 -0.1 0 0 0 1.5708  chassis right_rear_wheel"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="chassis2_lshinge" args="0.325 0.1 0 0 1.5708 0 chassis left_steering_hinge"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="chassis2_rshinge" args="0.325 -0.1 0 0 1.5708 0 chassis right_steering_hinge"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="lshinge2_lfwheel" args="0 0 0 0 0 1.5708 left_steering_hinge left_front_wheel"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="rshinge2_rfwheel" args="0 0 0 0 0 1.5708  right_steering_hinge right_front_wheel"/>
+
+<!-- mono_camera -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link2_camera" args="0.39 0 0.01 0 0 0 chassis mono_camera_link"  />
+
+<!-- zed stereo camera -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link2_zed" args="0.39 0 0.04 0 0 0 chassis zed_camera_link"  />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="zed2_llens" args="0 0.06 0 0 0 0 zed_camera_link camera_link"  />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="zed2_rlens" args="0 -0.06 0 0 0 0 zed_camera_link zed_camera_right_link"  />
+
+<!-- hokuyo lidar -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link2_laser" args="0.265 0 0.075 0 0 0 chassis laser"/>
+
+</launch>

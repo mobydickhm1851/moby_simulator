@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://gas_station</uri>
+      <name>gas_station</name>
+      <pose>-2.0 7.0 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://wallsatGasStation</uri>
+      <name>walls_at_gas_station</name>
+      <pose>0 0 0.5 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacles</uri>
+      <name>obstacles</name>
+      <pose>-1.2 -2 0.9 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://tower_crane</uri>
+      <name>tower_crane</name>
+      <pose>13.5 8 0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>

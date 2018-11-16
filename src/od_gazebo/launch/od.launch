@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="use_rviz" default="true" /> 
+  <arg name="use_od" default="false" /> 
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find od_gazebo)/worlds/obstacles.world"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+
+
+<!-- Generation of racecar and detectors: lidar, camera, zed(?) -->
+  <include file="$(find od_gazebo)/launch/racecar.launch"/>
+
+<!-- Generation of moving obstacle -->
+  <include file="$(find od_gazebo)/launch/obstacles.launch" if="$(arg use_od)"/>
+
+</launch>

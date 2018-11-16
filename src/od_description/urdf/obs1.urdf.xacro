@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="obstacles" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Import your models -->
+	<xacro:include filename="$(find od_description)/urdf/obstacle.urdf.xacro"/>
+
+	<!-- Build your comprehensive robot -->
+
+        <link name="world"/>
+
+	<gazebo reference="world">
+		<static>true</static>
+	</gazebo>
+
+	<xacro:obstacle name="obs1">
+		<origin xyz="0 0.3 0" rpy="0 0 0"/>
+	</xacro:obstacle>
+<!--
+	<xacro:obstacle name="obstacle_2">
+		<origin xyz="0 -0.3 0" rpy="0 0 0"/>
+	</xacro:rrbot>
+-->
+</robot>
