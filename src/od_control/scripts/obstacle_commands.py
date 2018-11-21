@@ -22,17 +22,18 @@ obsParam = {
         'a':(0.2), # slow down * 1.2
            }
 
-pub_rate = 100 # publish rate in Hz
+pub_rate = 100# publish rate in Hz
 speed = 10 # normal speed
 diff = 2 # from -1 to 1, the moving range of obstacle
 
-'''
 
-# this is the teleop getkey function for turtlebot
+# this is return the keyboard input
 def getKey():
 
     tty.setraw(sys.stdin.fileno())
-    rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
+    # the time-out argument ([3]) will affect the pub_rate since it stands for how long it will wait for the three list to have some value.([rlist] [wlist] [xlist])
+    rlist, _, _ = select.select([sys.stdin], [], [], 0.01)
+    # The fellowing if keep system from waiting for input
     if rlist:
         key = sys.stdin.read(1)
     else:
@@ -41,20 +42,6 @@ def getKey():
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
     return key
 
-'''
-
-
-def getKeyUnix():
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(sys.stdin.fileno())
-        key = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return key
-
-
 # For now, only movement in y direction is set
 def set_y_pose():
 
@@ -62,19 +49,37 @@ def set_y_pose():
     # pode_x = data.linear.x
     # pub_x_joint_position.publish(throttle)
    
-    pub_y_joint_position = rospy.Publisher('/obs1/obs1_y_joint_controller/command', Float64, queue_size=1)
+    count = 1
+    global diff, speed
+
+    pub_y_joint_position = rospy.Publisher('/obs1/obs1_y_joint_controller/command', Float64, queue_size=100)
     rospy.init_node('obstacle_commands', anonymous=True)	
     rate = rospy.Rate(pub_rate) # default is 100
     
     while not rospy.is_shutdown():
-        i =10 * time.time() # time_stamp
-        
-	pose_y = np.sin( i / pub_rate * speed ) * diff
-	
-	# rospy.loginfo(str): write to screen, node's log file and rosout
-        rospy.loginfo(pose_y)
-        pub_y_joint_position.publish(pose_y)
-        rate.sleep()
+        count = count +1 
+
+	try:
+	    key = getKey()
+	    if key == 'f':
+	        diff = diff + 0.5
+	    elif key == 'd':
+		diff == diff - 0.5
+	    elif key == 's':
+		speed == 1.2 * speed
+	    elif key == 'a':
+		speed == speed * 0.8
+	    # ctrl+c will return '\x03'
+	    elif key == '\x03':
+		break
+	finally:
+            i =10 * time.time() # time_stamp
+	    pose_y = np.sin( i / pub_rate * speed ) * diff
+	    #rospy.loginfo(str)  #write to screen, node's log file and rosout
+#            rospy.loginfo(pose_y)
+            pub_y_joint_position.publish(pose_y)
+            rate.sleep()
+#	    rospy.loginfo("count: %d",count)
 
 if __name__ == '__main__':
     # part of getKeyUnix input
@@ -84,5 +89,5 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
     
-    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
 
