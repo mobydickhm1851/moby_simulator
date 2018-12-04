@@ -33,9 +33,14 @@
 
    <!-- gazebo description for entity_link, which is the obstacle link -->
     <gazebo reference="${name}_entity_link">
+      <visual>
         <mu1>0.0</mu1>
         <mu2>0.0</mu2>
-        <material>Gazebo/Blue</material>
+        <material>
+            Gazebo/Blue
+	    <emissive>0.1 0.1 0.1 0.5</emissive>
+	</material>
+      </visual>
     </gazebo>
 
    <!-- transmission setting for x and y link -->

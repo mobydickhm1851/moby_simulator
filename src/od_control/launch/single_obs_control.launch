@@ -15,7 +15,7 @@
   <rosparam file="$(find od_control)/config/$(arg robot_ns)_control.yaml" command="load"/>
 
   <!-- load the controllers -->
-  <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false"  output="screen" ns="/$(arg robot_ns)" args="$(arg robot_ns)_x_joint_controller
+  <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false"  output="screen" args="$(arg robot_ns)_x_joint_controller
                                              $(arg robot_ns)_y_joint_controller 
 					     joint_state_controller"/>
 
