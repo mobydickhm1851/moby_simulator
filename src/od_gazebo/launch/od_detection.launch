@@ -12,7 +12,7 @@
   <!-- joy stick teleop -->
   <include file="$(find solabot_navigation)/launch/includes/teleop_joy.xml"  if="$(arg teleop_joy)" />
   <!-- keyboard teleop -->
-  <include file="$(find solabot_navigation)/launch/includes/teleop_key.xml"  unless="$(arg teleop_joy)" />
+  <include file="$(find od_gazebo)/launch/includes/teleop_key.xml"  unless="$(arg teleop_joy)" />
 
 
 <!-- GAZEBO SIMULATOR -->  

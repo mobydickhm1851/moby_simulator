@@ -11,7 +11,9 @@
 
 
 <!-- Generation of racecar and detectors: lidar, camera, zed(?) -->
-  <include file="$(find od_gazebo)/launch/includes/racecar.xml"/>
+  <include file="$(find od_gazebo)/launch/includes/racecar.xml">
+      <arg name="init_pose" value="-x 0 -y 10 -z 0 -Y -1.57" />
+  </include>
 
 <!-- Generation of moving obstacle -->
   <include file="$(find od_gazebo)/launch/includes/obstacles.xml" if="$(arg use_od)"/>

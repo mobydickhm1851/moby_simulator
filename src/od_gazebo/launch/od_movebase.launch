@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+
+<launch>
+
+  <arg name="use_rviz" default="true" /> 
+
+  <!-- include racecar and obstacle -->
+  <include file="$(find od_gazebo)/launch/od.launch"/>
+
+  <!-- navigation -->
+  <include file="$(find od_gazebo)/launch/includes/navigation.xml"/>
+  
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find od_gazebo)/configs/movebase_teb.rviz" if="$(arg use_rviz)" />
+
+</launch>
+

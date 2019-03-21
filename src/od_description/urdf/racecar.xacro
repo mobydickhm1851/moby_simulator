@@ -294,7 +294,7 @@
   </link>
   
   <joint name="mono_camera_joint" type="fixed">
-    <origin xyz="0.390 0 0.01" rpy="0 0 0"/>
+    <origin xyz="0.390 0 0.5" rpy="0 0 0"/>
     <axis xyz="0 0 1" />
     <parent link="chassis"/>
     <child link="mono_camera_link"/>

@@ -22,9 +22,9 @@ obsParam = {
         'a':(0.2), # slow down * 1.2
            }
 
-pub_rate = 100# publish rate in Hz
-speed = 10 # normal speed
-diff = 2 # from -1 to 1, the moving range of obstacle
+pub_rate = 100.0 # publish rate in Hz
+speed = 50.0 # normal speed
+diff = 2.0 # from -1 to 1, the moving range of obstacle
 
 
 # this is return the keyboard input
@@ -53,6 +53,7 @@ def set_y_pose():
     global diff, speed
 
     pub_y_joint_position = rospy.Publisher('/obs1/obs1_y_joint_controller/command', Float64, queue_size=100)
+    pub_y_joint_vel = rospy.Publisher('/obs1/obs1_y_vel', Float64, queue_size=100)
     rospy.init_node('obstacle_commands', anonymous=True)	
     rate = rospy.Rate(pub_rate) # default is 100
     
@@ -64,20 +65,26 @@ def set_y_pose():
 	    if key == 'f':
 	        diff = diff + 0.5
 	    elif key == 'd':
-		diff == diff - 0.5
+		diff = diff - 0.5
 	    elif key == 's':
-		speed == 1.2 * speed
+		speed = 1.2 * speed
 	    elif key == 'a':
-		speed == speed * 0.8
+		speed = speed * 0.8
 	    # ctrl+c will return '\x03'
 	    elif key == '\x03':
 		break
 	finally:
-            i =10 * time.time() # time_stamp
+	    # time_stamp, time.time() increase 1 for each second
+            i = time.time() 
 	    pose_y = np.sin( i / pub_rate * speed ) * diff
 	    #rospy.loginfo(str)  #write to screen, node's log file and rosout
 #            rospy.loginfo(pose_y)
+	    vel_y = (speed / pub_rate) * np.cos(i / pub_rate * speed) * diff
+ 
             pub_y_joint_position.publish(pose_y)
+            pub_y_joint_vel.publish(vel_y)
+            rospy.loginfo(vel_y)
+
             rate.sleep()
 #	    rospy.loginfo("count: %d",count)
 
